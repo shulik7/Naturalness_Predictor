@@ -24,4 +24,4 @@ def get_tokenize_func(tokenizer: AutoTokenizer):
         tokens['labels'] = entries['Is_Nature_Product']
         return tokens
 
-    return tokenize_func
+    return tokenize_func    
