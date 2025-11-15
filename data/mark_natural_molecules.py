@@ -35,7 +35,7 @@ def load_natural_molecules(npatlas_file):
 
 def mark_chembl_molecules(chembl_file, natural_inchi_keys, output_file):
     """
-    Make whehter ChEMBL molecules are natural molecules.
+    Mark whether ChEMBL molecules are natural molecules.
     
     Args:
         chembl_file: Path to ChEMBL TSV file
@@ -52,7 +52,7 @@ def mark_chembl_molecules(chembl_file, natural_inchi_keys, output_file):
         total_non_natural = 0
         write_header = True
 
-        with pd.io.common.get_handle(output_file, 'w', encoding='utf-8') as out_handle:
+        with pd.io.common.get_handle(output_file, 'w', encoding='utf-8', compression='gzip') as out_handle:
             for chunk in pd.read_csv(chembl_file, sep='\t', chunksize=chunk_size, low_memory=False):
                 total_processed += len(chunk)
                 
@@ -61,9 +61,9 @@ def mark_chembl_molecules(chembl_file, natural_inchi_keys, output_file):
                 
                 # Mark out natural molecules
                 chunk['Is_Nature_Product'] = chunk['Inchi Key'].str.upper().apply(lambda x: 1 if x in natural_inchi_keys else 0)
-            
+                
                 # Write the chunk to the output file
-                chunk.to_csv(out_handle.handle, sep='\t', columns=['Smiles', 'Is_Nature_Product'], index=False, header=write_header)
+                chunk.to_csv(out_handle.handle, sep='\t', columns=['Smiles', 'Is_Nature_Product', 'Np Likeness Score'], index=False, header=write_header)
                 
                 total_natural += chunk['Is_Nature_Product'].sum()
                 total_non_natural += len(chunk) - total_natural
@@ -93,7 +93,7 @@ def main():
     script_dir = Path(__file__).parent
     npatlas_file = script_dir / "NPAtlas_download_2024_09.tsv"
     chembl_file = script_dir / "ChEMBL_small_molecule.tsv"
-    output_file = script_dir / "marked_ChEMBL_small_molecules.tsv"
+    output_file = script_dir / "marked_ChEMBL_small_molecules.tsv.gz"
 
     # Check if input files exist
     if not npatlas_file.exists():
