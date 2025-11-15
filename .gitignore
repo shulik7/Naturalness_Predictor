@@ -1,0 +1,45 @@
+# Ignore Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Ignore logs
+logs/
+
+# Ignore results
+results/
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Package distribution
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Dependencies
+*.lock
+
+# Environment variables
+.env
+.env.local
+
+# OS files
+Thumbs.db
