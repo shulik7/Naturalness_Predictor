@@ -1,0 +1,7 @@
+gradio
+spaces
+numpy
+transformers
+torch
+rdkit
+pillow
